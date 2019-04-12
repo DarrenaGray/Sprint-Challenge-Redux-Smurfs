@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getSmurfs } from './../actions';
+import { getSmurfs, deleteSmurf } from './../actions';
 
 import SmurfForm from './SmurfForm';
 
@@ -10,6 +10,10 @@ class SmurfList extends React.Component {
       this.props.getSmurfs();
     }
     
+    deleteSmurf = (id) => {
+        console.log(id)
+        this.props.deleteSmurf(id);
+    }
 
     render() {
         console.log('Rendering...')
@@ -17,9 +21,10 @@ class SmurfList extends React.Component {
             <div>
                 {this.props.smurfs.map((smurf, index) => (
                     <div key={index}>
-                    <h3>{smurf.name}</h3>
-                    <p>Age: {smurf.age}</p>
-                    <p>Height: {smurf.height}</p>
+                        <h3>{smurf.name}</h3>
+                        <p>Age: {smurf.age}</p>
+                        <p>Height: {smurf.height}</p>
+                        <button onClick={() => this.deleteSmurf(smurf.id)}>Delete</button>
                     </div>
                 ))}
                 <SmurfForm smurfs={this.props.smurfs}/>
@@ -35,4 +40,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { getSmurfs } )(SmurfList);
+export default connect(mapStateToProps, { getSmurfs, deleteSmurf } )(SmurfList);
